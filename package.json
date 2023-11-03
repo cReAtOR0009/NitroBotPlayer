@@ -1,0 +1,22 @@
+{
+  "name": "discord_bot",
+  "version": "1.0.0",
+  "description": "a Discord bot that plays nitrotype",
+  "main": ".src/bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./src/bot.js",
+    "dev": "nodemon ./src/bot.js"
+  },
+  "author": "Sage (creator)",
+  "license": "ISC",
+  "dependencies": {
+    "@discordjs/rest": "^2.0.1",
+    "discord.js": "^14.13.0",
+    "dotenv": "^16.3.1",
+    "nodemon": "^3.0.1",
+    "puppeteer": "^21.3.1",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
+  }
+}
