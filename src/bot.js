@@ -45,7 +45,7 @@ client.on("interactionCreate", async (interaction) => {
 let browser;
 
 async function initializeBrowser() {
-  browser = await puppeteer.launch({ headless: false });
+  browser = await puppeteer.launch({ headless: true });
   console.log("Browser initialized");
 }
 
