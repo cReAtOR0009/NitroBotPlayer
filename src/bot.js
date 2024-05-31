@@ -54,7 +54,7 @@ class BrowserManager {
   }
 
   async initializeBrowser() {
-    this.browser = await puppeteer.launch({ headless: false });
+    this.browser = await puppeteer.launch({ headless: true });
     console.log("Browser initialized");
   }
 
