@@ -5,7 +5,7 @@
   "main": ".src/bot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./src/bot.js",
+    "start": "pm2 start ./src/bot.js",
     "dev": "nodemon ./src/bot.js"
   },
   "author": "Sage (creator)",
@@ -14,7 +14,9 @@
     "@discordjs/rest": "^2.0.1",
     "discord.js": "^14.13.0",
     "dotenv": "^16.4.5",
+    "express": "^4.19.2",
     "nodemon": "^3.0.1",
+    "pm2": "^5.4.0",
     "puppeteer": "^21.3.1",
     "puppeteer-extra": "^3.3.6",
     "puppeteer-extra-plugin-stealth": "^2.11.2"
