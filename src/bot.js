@@ -44,7 +44,7 @@ client.on("interactionCreate", async (interaction) => {
       await startGame(username, password, typingSpeed, playTimes);
     } catch (error) {}
   }
-});
+}); 
 
 let browser;
 
@@ -88,24 +88,14 @@ const initializeBrowserManager = async () => {
     return initializeBrowserManager(); // Call itself recursively
   }
 };
-
-// (async () => {
-//   let browserManager;
-//   try {
-//     browserManager = await initializeBrowserManager();
-//     console.log("Browser manager initialized:", browserManager);
-//     // Call other functions that depend on browserManager
-//   } catch (error) {
-//     console.error("Error initializing browser manager:", error);
-//   }
-// })();
+const Startbrowser = initializeBrowserManager()
 
 async function startGame(username, password, typingSpeed, playTimes) {
   let page;
   try {
     const formattedUsername = username;
-    const formattedPassword = password;
-    const browserManager = await initializeBrowserManager();
+    const formattedPassword = password; 
+    const browserManager = await Startbrowser;  
 
     // Create a new page
     const page = await browserManager.createNewPage();
@@ -118,20 +108,27 @@ async function startGame(username, password, typingSpeed, playTimes) {
     await page.goto("https://www.nitrotype.com", { timeout: 120000 });
 
     const loginBtn = ".header-login";
+    let headerLogin;
 
-    await page.waitForSelector(loginBtn);
-    await page.click(loginBtn);
-    await page.waitForSelector("#username", { timeout: 60000 });
-    await page.waitForSelector("#password", { timeout: 60000 });
+    try {
+      headerLogin = await page.waitForSelector(loginBtn, { timeout: 30000 });
+    } catch (error) {
+      console.error("Header login button not found:", error);
+    }
 
-    await page.type("#username", formattedUsername, { delay: 105 });
-    await page.type("#password", formattedPassword, { delay: 125 });
-    await page.waitForSelector(".btn--primary");
+    if (headerLogin) {
+      await page.click(loginBtn);
+      await page.waitForSelector("#username", { timeout: 60000 });
+      await page.waitForSelector("#password", { timeout: 60000 });
+
+      await page.type("#username", username, { delay: 105 });
+      await page.type("#password", password, { delay: 125 });
+    }
+
+    await page.waitForSelector(".btn--primary", { timeout: 60000 });
     await page.click(".btn--primary");
 
-    const inner = await page.$eval(".btn--primary", (element) => {
-      return element.textContent;
-    });
+    const inner = await page.$eval(".btn--primary", (element) => element.textContent);
     console.log(inner);
 
     for (let index = 0; index < playTimes; index + 1) {
@@ -270,5 +267,5 @@ async function startGame(username, password, typingSpeed, playTimes) {
 }
 
 // startGame("M12347", "M12347@", "150", "10");
-
+ 
 client.login(process.env.DISCORD_BOT_TOKEN);
