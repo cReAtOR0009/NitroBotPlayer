@@ -1,19 +1,7 @@
-const http = require('http');
-
-// Create a simple HTTP server
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello, Render!');
-});
-
-// Listen on a port
-const PORT = process.env.PORT || 3000; // Use the PORT environment variable or default to 3000
-server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
-
 require("dotenv").config();
+const express = require('express');
+const app = express();
+const PORT = process.env.PORT || 3000;
 const { REST } = require("@discordjs/rest");
 const { Client, GatewayIntentBits, Routes } = require("discord.js");
 
@@ -282,5 +270,18 @@ async function startGame(username, password, typingSpeed, playTimes) {
 }
 
 // startGame("M12347", "M12347@", "150", "10");
+const myMiddleware = (req, res, next) => {
+  console.log("Server Request");
+  next();
+};
+
+app.get("/", myMiddleware, (req, res, next) =>
+  res.send("Nodejs NitroBot Server is Running")
+);
+app.listen(PORT, () => {
+  console.log(`product Bot running on ${PORT}`);
+});
+
+
  
 client.login(process.env.DISCORD_BOT_TOKEN);
